@@ -14,7 +14,7 @@ $img = imagecreatetruecolor(500*$multi, 500*$multi);
 $x_zero = 250*$multi;
 $y_zero = 250*$multi;
 
-$blu = imagecolorallocatealpha($img,  50, 50,200, 10);
+$blu = imagecolorallocatealpha($img,  50, 50,200, 0);
 $trans = imagecolorallocatealpha($img,  0, 0, 0, 127);
 
 imagealphablending($img, false);

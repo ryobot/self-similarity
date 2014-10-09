@@ -18,6 +18,7 @@
 <script>
 var template = 0;
 var scale = 100;
+var steps = 5;
 $(function() {
     $( "#slider_source_template" ).slider({
         orientation: "vertical", range: "min", min: 0, max: 8, value: 0,
@@ -42,10 +43,27 @@ $(function() {
         }
     });
     $( "#source_scale" ).val( $( "#slider_source_scale" ).slider( "value" ) );
+
+    $( "#slider_steps" ).slider({
+        orientation: "vertical", range: "min", min: 2, max: 10, value: 5,
+        slide: function( event, ui ) {
+            $( "#steps" ).val( ui.value );
+            if ( ui.value != steps ) {
+                steps = ui.value;
+                updateResult();
+            }
+        }
+    });
+    $( "#steps" ).val( $( "#slider_steps" ).slider( "value" ) );
 });
 function updateImg() {
-    //window.alert("update image : template=" + template + " scale=" + scale);
     document.getElementById("src_img").src = "template.php?template=" + template + "&scale=" + scale;    
+    document.getElementById("step_img").src = "step.php?template=" + template + "&scale=" + scale;
+    document.getElementById("step5_img").style.visibility = "hidden";   
+}
+function updateResult() {
+    document.getElementById("step5_img").src = "step.php?step=" + steps + "&template=" + template + "&scale=" + scale;    
+    document.getElementById("step5_img").style.visibility = "visible";   
 }
 </script>
 </head>
@@ -58,13 +76,19 @@ function updateImg() {
         <td><label for="source_scale">Src. Scale:</label><br>
             <input type="text" id="source_scale" style="border: 0; color: #931ff6; font-weight: bold;" size="5" />%
         </td>
+        <td><label for="steps">Draw Steps:</label><br>
+            <input type="text" id="steps" style="border: 0; color: #931ff6; font-weight: bold;" size="5" />
+        </td>
     </tr><tr>
         <td><div id="slider_source_template" style="height: 150px; margin-left: 20px;"></div></td>
         <td><div id="slider_source_scale" style="height: 150px; margin-left: 20px;"></div></td>
+        <td><div id="slider_steps" style="height: 150px; margin-left: 20px;"></div></td>
     </tr>
 </table>
 <div style="background: #fff">
 <img id="src_img" src="template.php">
+<img id="step_img" src="step.php">
+<img id="step5_img" src="step.php?step=5">
 </div>
 </body>
 </html>
