@@ -3,23 +3,38 @@ $template = "0";
 if ( isset($_GET['template'] ) ) {
   $template = $_GET["template"];
 }
-$scale_percent = "100";
-if ( isset($_GET['scale'] ) ) {
-  $scale_percent = $_GET["scale"];
+$template_size = "100";
+if ( isset($_GET['template_size'] ) ) {
+  $template_size = $_GET["template_size"];
+}
+$distribution_str = "0";
+if ( isset($_GET['distribution'] ) ) {
+  $distribution_str = $_GET["distribution"];
+}
+$rotate_str = "0";
+if ( isset($_GET['rotate'] ) ) {
+  $rotate_str = $_GET["rotate"];
 }
 $step = 0;
 if ( isset($_GET['step'] ) ) {
   $step = intval($_GET["step"]) - 1;
 }
+$layer = "no";
+if ( isset($_GET['layer'])) {
+  $layer = $_GET['layer'];
+}
 
 if ( $step == 0 ) {
-    $copy_url = "http://localhost/ss/template.php?template=".$template."&scale=".$scale_percent;
+    $copy_url = "http://localhost/ss/template.php?template=".$template."&template_size=".$template_size;
 } else {
-    $copy_url = "http://localhost/ss/step.php?step=".strval($step)."&template=".$template."&scale=".$scale_percent;
+    $copy_url = "http://localhost/ss/step.php?step=".strval($step)."&template=".$template."&template_size=".$template_size."&distribution=".$distribution_str."&rotate=".$rotate_str;
 }
 $copy_img = imagecreatefrompng($copy_url);
 
-$base_url = "http://localhost/ss/template.php?template=".$template."&scale=".$scale_percent;
+$distribution = intval($distribution_str);
+$rotate = intval($rotate_str);
+
+$base_url = "http://localhost/ss/template.php?template=".$template."&template_size=".$template_size."&layer=".$layer;
 $img = imagecreatefrompng($base_url);
 $width = imagesx($img);
 $height = imagesy($img);

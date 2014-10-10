@@ -12,3 +12,7 @@ table.sliders td {
     padding: 10px;
     text-align: center;
 }
+div.board {
+    border-radius: 10px;
+    padding: 5px;
+}
