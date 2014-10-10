@@ -16,15 +16,15 @@
 <script src="../jquery/jquery-ui.js"></script>
 <link rel="stylesheet" href="ss.css" />
 <script>
-var template = 0;
-var template_size = 100;
+var template = 1;
+var template_size = 60;
 var distribution = 0;
-var rotate = 0;
-var steps = 5;
+var rotate = 30;
+var steps = 10;
 $(function() {
     //template:
     $( "#slider_template" ).slider({
-        orientation: "vertical", range: "min", min: 0, max: 8, value: 0,
+        orientation: "vertical", range: "min", min: 0, max: 8, value: 1,
         slide: function( event, ui ) {
             $( "#template" ).val( ui.value );
             if ( ui.value != template ) {
@@ -37,7 +37,7 @@ $(function() {
 
      //template_size:
     $( "#slider_template_size" ).slider({
-        orientation: "vertical", range: "min", min: 50, max: 150, value: 100, step: 10,
+        orientation: "vertical", range: "min", min: 10, max: 100, value: 60, step: 10,
         slide: function( event, ui ) {
             $( "#template_size" ).val( ui.value );
             if ( ui.value != template_size ) {
@@ -63,7 +63,7 @@ $(function() {
 
     //rotate:
     $( "#slider_rotate" ).slider({
-        orientation: "vertical", range: "min", min: 0, max: 11, value: 0,
+        orientation: "vertical", range: "min", min: -90, max: 90, value: 30, step: 15,
         slide: function( event, ui ) {
             $( "#rotate" ).val( ui.value );
             if ( ui.value != rotate ) {
@@ -76,7 +76,7 @@ $(function() {
 
     //steps:
     $( "#slider_steps" ).slider({
-        orientation: "vertical", range: "min", min: 2, max: 10, value: 5,
+        orientation: "vertical", range: "min", min: 2, max: 10, value: 10,
         slide: function( event, ui ) {
             $( "#steps" ).val( ui.value );
             if ( ui.value != steps ) {
@@ -138,12 +138,16 @@ function updateResult() {
             <td><div id="slider_steps" style="height: 150px; margin-left: 20px;"></div></td>
         </tr>
     </table></div></td>
-</tr></table>
+<td rowspan="2">
+    <img id="step5_img" src="step.php?step=10">
+</td>
+</tr>
+<tr><td colspan="3">
+    <div class="board" style="background: #eee">
+    <img id="step_img" src="step.php?layer=yes">
+    </div>
+</td></tr>
+</table>
 
-<div style="background: #fff">
-<!-- <img id="src_img" src="template.php"> -->
-<img id="step_img" src="step.php?layer=yes">
-<img id="step5_img" src="step.php?step=5">
-</div>
 </body>
 </html>
