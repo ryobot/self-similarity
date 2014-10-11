@@ -28,6 +28,7 @@ $y_zero = 250*$multi;
 $blu = imagecolorallocatealpha($img,  50, 50,200, 0);
 if ($layer == "yes") {
     $blu = imagecolorallocatealpha($img,  200, 50,50, 50);
+    $ylw = imagecolorallocatealpha($img,  250, 250,50, 0);
 }
 $trans = imagecolorallocatealpha($img,  0, 0, 0, 127);
 
@@ -68,6 +69,11 @@ switch ($template) {
         imagefilledellipse($img, $x_zero, $y_zero, 200*$scale, 200*$scale, $blu);
         break;
 }
+
+if ($layer == "yes") {
+    imagefilledellipse($img, $x_zero, $y_zero - 70*$scale, 40*$scale, 40*$scale, $ylw);
+}
+
 $small_size = 600;
 if ($mini) {
     $small_size = 300;

@@ -16,15 +16,15 @@
 <script src="../jquery/jquery-ui.js"></script>
 <link rel="stylesheet" href="ss.css" />
 <script>
-var template = 1;
-var template_size = 60;
+var template = 0;
+var template_size = 40;
 var distribution = 0;
-var rotate = 30;
+var rotate = 0;
 var steps = 10;
 $(function() {
     //template:
     $( "#slider_template" ).slider({
-        orientation: "vertical", range: "min", min: 0, max: 8, value: 1,
+        orientation: "vertical", range: "min", min: 0, max: 8, value: 0,
         slide: function( event, ui ) {
             $( "#template" ).val( ui.value );
             if ( ui.value != template ) {
@@ -37,7 +37,7 @@ $(function() {
 
      //template_size:
     $( "#slider_template_size" ).slider({
-        orientation: "vertical", range: "min", min: 10, max: 100, value: 60, step: 10,
+        orientation: "vertical", range: "min", min: 10, max: 100, value: 40, step: 10,
         slide: function( event, ui ) {
             $( "#template_size" ).val( ui.value );
             if ( ui.value != template_size ) {
@@ -63,7 +63,7 @@ $(function() {
 
     //rotate:
     $( "#slider_rotate" ).slider({
-        orientation: "vertical", range: "min", min: -90, max: 90, value: 30, step: 15,
+        orientation: "vertical", range: "min", min: -90, max: 90, value: 0, step: 15,
         slide: function( event, ui ) {
             $( "#rotate" ).val( ui.value );
             if ( ui.value != rotate ) {
@@ -76,12 +76,12 @@ $(function() {
 
     //steps:
     $( "#slider_steps" ).slider({
-        orientation: "vertical", range: "min", min: 2, max: 10, value: 10,
+        orientation: "vertical", range: "min", min: 2, max: 20, value: 10,
         slide: function( event, ui ) {
             $( "#steps" ).val( ui.value );
             if ( ui.value != steps ) {
                 steps = ui.value;
-                updateResult();
+                //updateResult();
             }
         }
     });
@@ -90,11 +90,11 @@ $(function() {
 function updateImg() {
     //document.getElementById("src_img").src = "template.php?template=" + template + "&template_size=" + template_size;    
     document.getElementById("step_img").src = "step.php?template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&layer=yes";
-    document.getElementById("step5_img").style.visibility = "hidden";
+    //document.getElementById("step5_img").style.visibility = "hidden";
 }
 function updateResult() {
     document.getElementById("step5_img").src = "step.php?step=" + steps + "&template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate;    
-    document.getElementById("step5_img").style.visibility = "visible";   
+    //document.getElementById("step5_img").style.visibility = "visible";   
 }
 </script>
 </head>
@@ -110,8 +110,8 @@ function updateResult() {
                 <input type="text" id="template_size" style="border: 0; color: #931ff6; font-weight: bold;" size="5" />%
             </td>
         </tr><tr>
-            <td><div id="slider_template" style="height: 150px; margin-left: 20px;"></div></td>
-            <td><div id="slider_template_size" style="height: 150px; margin-left: 20px;"></div></td>
+            <td><div id="slider_template" style="height: 200px; margin-left: 20px;"></div></td>
+            <td><div id="slider_template_size" style="height: 200px; margin-left: 20px;"></div></td>
         </tr>
     </table></div></td>
     <!-- scaling -->
@@ -124,8 +124,8 @@ function updateResult() {
                 <input type="text" id="rotate" style="border: 0; color: #931ff6; font-weight: bold;" size="5" />
             </td>
         </tr><tr>
-            <td><div id="slider_distribution" style="height: 150px; margin-left: 20px;"></div></td>
-            <td><div id="slider_rotate" style="height: 150px; margin-left: 20px;"></div></td>
+            <td><div id="slider_distribution" style="height: 200px; margin-left: 20px;"></div></td>
+            <td><div id="slider_rotate" style="height: 200px; margin-left: 20px;"></div></td>
         </tr>
     </table></div></td>
     <!-- render -->
@@ -135,16 +135,18 @@ function updateResult() {
                 <input type="text" id="steps" style="border: 0; color: #931ff6; font-weight: bold;" size="5" />
             </td>
         </tr><tr>
-            <td><div id="slider_steps" style="height: 150px; margin-left: 20px;"></div></td>
+            <td><div id="slider_steps" style="height: 170px; margin-left: 20px;"></div></td>
         </tr>
-    </table></div></td>
+            </table>
+    <button onclick="updateResult()">Update</button>
+        </div></td>
 <td rowspan="2">
     <img id="step5_img" src="step.php?step=10">
 </td>
 </tr>
 <tr><td colspan="3">
-    <div class="board" style="background: #eee">
-    <img id="step_img" src="step.php?layer=yes">
+    <div class="board" style="background: #abb"><center>
+    <img id="step_img" src="step.php?layer=yes"></center>
     </div>
 </td></tr>
 </table>

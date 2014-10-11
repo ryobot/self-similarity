@@ -1,22 +1,26 @@
 <?php
 
+function cropImg($img, $left, $top, $width, $height) {
+    $ret = imagecreatetruecolor($width, $height);
+    imagealphablending($ret, false);
+    imagesavealpha($ret, true);
+    imagecopy($ret, $img, 0, 0, $left, $top, $width, $height );
+    return $ret;
+}
+
 function rotateImg($img, $deg) {
     $trans = imagecolorallocatealpha($img,  0, 0, 0, 127);
     $rot = imagerotate($img, $deg, $trans);
     $left = (imagesx($rot) - imagesx($img))/2;
     $top = (imagesy($rot) - imagesy($img))/2;
-    $ret = imagecreatetruecolor(imagesx($img), imagesy($img));
-    imagealphablending($ret, false);
-    imagesavealpha($ret, true);
-    imagecopy($ret, $rot, 0, 0, $left, $top, imagesx($img), imagesy($img) );
-    return $ret;
+    return cropImg($rot, $left, $top, imagesx($img), imagesy($img));
 }
 
-$template = "1";
+$template = "0";
 if ( isset($_GET['template'] ) ) {
   $template = $_GET["template"];
 }
-$template_size = "60";
+$template_size = "40";
 if ( isset($_GET['template_size'] ) ) {
   $template_size = $_GET["template_size"];
 }
@@ -24,7 +28,7 @@ $distribution_str = "0";
 if ( isset($_GET['distribution'] ) ) {
   $distribution_str = $_GET["distribution"];
 }
-$rotate_str = "30";
+$rotate_str = "0";
 if ( isset($_GET['rotate'] ) ) {
   $rotate_str = $_GET["rotate"];
 }
@@ -59,9 +63,9 @@ $height = imagesy($img);
 imagealphablending($img, true);
 
 $scale = 0.5;
-$dist = 100;
+$dist = 140;
 if ($mini) {
-    $dist = 50;
+    $dist = 70;
 }
 
 $dx = $scale*$width;
@@ -77,10 +81,13 @@ imagecopyresampled( $img, rotateImg($copy_img, $rotate + 180), $x0 - $dx/2, $y0 
 
 imagealphablending($img, false);
 imagesavealpha($img, true);
-
 header('Content-type: image/png');
-imagepng($img);
-
+if ($mini) {
+    $frame = 30;
+    imagepng(cropImg($img, $frame, $frame, $width - 2*$frame, $height - 2*$frame));
+} else {
+    imagepng($img);
+}
 imagedestroy($img);
 imagedestroy($copy_img);
 ?>

@@ -15,4 +15,5 @@ table.sliders td {
 div.board {
     border-radius: 10px;
     padding: 5px;
+    height: 300px;
 }
