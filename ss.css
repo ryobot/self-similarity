@@ -8,6 +8,16 @@ and open the template in the editor.
     Author     : watanabe
 */
 
+body {
+    background: #556;
+    text-align: center;
+    padding: 10px;
+}
+div.contents {
+    width: 1040px;
+    margin: 0 auto;
+    border: 1px solid #778;
+}
 table.sliders td {
     padding: 10px;
     text-align: center;
@@ -16,4 +26,20 @@ div.board {
     border-radius: 10px;
     padding: 5px;
     height: 300px;
+}
+div.loader {
+    border-radius: 10px;
+    background: #fff;
+    width: 360px;
+    height: 360px;
+    padding-left: 270px;
+    padding-top: 270px;
+}
+div.result {
+    border-radius: 10px;
+    background: #fff;
+    width: 615px;
+    height: 615px;
+    padding-left: 15px;
+    padding-top: 15px;
 }

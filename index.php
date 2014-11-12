@@ -21,6 +21,11 @@ var template_size = 40;
 var distribution = 0;
 var rotate = 0;
 var steps = 10;
+
+var resultImg = new Image();
+resultImg.src = "step.php?step=10";
+resultImg.onload = function () { resultLoaded(); }
+
 $(function() {
     //template:
     $( "#slider_template" ).slider({
@@ -63,7 +68,7 @@ $(function() {
 
     //rotate:
     $( "#slider_rotate" ).slider({
-        orientation: "vertical", range: "min", min: -90, max: 90, value: 0, step: 15,
+        orientation: "vertical", range: "min", min: -90, max: 90, value: 0, step: 5,
         slide: function( event, ui ) {
             $( "#rotate" ).val( ui.value );
             if ( ui.value != rotate ) {
@@ -92,13 +97,21 @@ function updateImg() {
     document.getElementById("step_img").src = "step.php?template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&layer=yes";
     //document.getElementById("step5_img").style.visibility = "hidden";
 }
+function resultLoaded() {
+    document.getElementById("result_img").src = resultImg.src;
+    document.getElementById("result_div").className = "result";
+}
 function updateResult() {
-    document.getElementById("step5_img").src = "step.php?step=" + steps + "&template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate;    
+    resultImg.src = "step.php?step=" + steps + "&template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate;
+    //resultImg.onload = function () { resultLoaded(); }
+    document.getElementById("result_img").src = "loader.gif"
+    document.getElementById("result_div").className = "loader";
     //document.getElementById("step5_img").style.visibility = "visible";   
 }
 </script>
 </head>
 <body>
+<div class="contents">
 <table><tr>
     <!-- source -->
     <td><div class="board" style="background: #baa;"><b>source</b><table class="sliders">
@@ -141,7 +154,9 @@ function updateResult() {
     <button onclick="updateResult()">Update</button>
         </div></td>
 <td rowspan="2">
-    <img id="step5_img" src="step.php?step=10">
+    <div id="result_div" class="loader">
+    <img id="result_img" src="loader.gif">
+    </div>
 </td>
 </tr>
 <tr><td colspan="3">
@@ -151,5 +166,5 @@ function updateResult() {
 </td></tr>
 </table>
 
-</body>
+</div></body>
 </html>
