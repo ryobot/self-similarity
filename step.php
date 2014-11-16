@@ -74,10 +74,34 @@ $dy = $scale*$height;
 $x0 = $width / 2;
 $y0 = $height / 2;
 
-imagecopyresampled( $img, rotateImg($copy_img, $rotate), $x0 - $dx/2, $y0 - $dy/2 - $dist, 0, 0, $dx, $dy, $width, $height);
-imagecopyresampled( $img, rotateImg($copy_img, $rotate + 90), $x0 - $dx/2 - $dist, $y0 - $dy/2, 0, 0, $dx, $dy, $width, $height);
-imagecopyresampled( $img, rotateImg($copy_img, $rotate - 90), $x0 - $dx/2 + $dist, $y0 - $dy/2,  0, 0, $dx, $dy, $width, $height);
-imagecopyresampled( $img, rotateImg($copy_img, $rotate + 180), $x0 - $dx/2, $y0 - $dy/2 + $dist,  0, 0, $dx, $dy, $width, $height);
+switch($distribution) {
+    case 1: // 3/4
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate), $x0 - $dx/2, $y0 - $dy/2 - $dist, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate + 90), $x0 - $dx/2 - $dist, $y0 - $dy/2, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate - 90), $x0 - $dx/2 + $dist, $y0 - $dy/2,  0, 0, $dx, $dy, $width, $height);
+        break;
+    case 2: // 2/4
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate), $x0 - $dx/2, $y0 - $dy/2 - $dist, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate - 90), $x0 - $dx/2 + $dist, $y0 - $dy/2,  0, 0, $dx, $dy, $width, $height);
+        break;
+    case 3: // 3/3
+        $rad = deg2rad(30);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate), $x0 - $dx/2, $y0 - $dy/2 - $dist, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate + 120), $x0 - $dx/2 - $dist*cos($rad), $y0 - $dy/2 + $dist*sin($rad),  0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate - 120), $x0 - $dx/2 + $dist*cos($rad), $y0 - $dy/2 + $dist*sin($rad),  0, 0, $dx, $dy, $width, $height);
+        break;
+    case 4: // 2/3
+        $rad = deg2rad(30);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate), $x0 - $dx/2, $y0 - $dy/2 - $dist, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate - 120), $x0 - $dx/2 + $dist*cos($rad), $y0 - $dy/2 + $dist*sin($rad),  0, 0, $dx, $dy, $width, $height);
+        break;
+    default: // 4/4
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate), $x0 - $dx/2, $y0 - $dy/2 - $dist, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate + 90), $x0 - $dx/2 - $dist, $y0 - $dy/2, 0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate - 90), $x0 - $dx/2 + $dist, $y0 - $dy/2,  0, 0, $dx, $dy, $width, $height);
+        imagecopyresampled( $img, rotateImg($copy_img, $rotate + 180), $x0 - $dx/2, $y0 - $dy/2 + $dist,  0, 0, $dx, $dy, $width, $height);
+        break;
+}
 
 imagealphablending($img, false);
 imagesavealpha($img, true);
