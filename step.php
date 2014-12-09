@@ -53,7 +53,7 @@ if ( $step == 0 ) {
 $copy_img = imagecreatefrompng($copy_url);
 
 $distribution = intval($distribution_str);
-$rotate = intval($rotate_str);
+$rotate = -intval($rotate_str);
 
 $base_url = "http://localhost/ss/template.php?template=".$template."&template_size=".$template_size."&layer=".$layer;
 $img = imagecreatefrompng($base_url);
