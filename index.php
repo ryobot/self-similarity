@@ -20,6 +20,7 @@ var template = 0;
 var template_size = 40;
 var distribution = 0;
 var rotate = 0;
+var dist_rotate = 0;
 var steps = 10;
 
 var resultImg = new Image();
@@ -79,6 +80,19 @@ $(function() {
     });
     $( "#rotate" ).val( $( "#slider_rotate" ).slider( "value" ) );
 
+    //dist rotate:
+    $( "#slider_dist_rotate" ).slider({
+        range: "min", min: -90, max: 90, value: 0, step: 5,
+        slide: function( event, ui ) {
+            $( "#dist_rotate" ).val( ui.value );
+            if ( ui.value != dist_rotate ) {
+                dist_rotate = ui.value;
+                updateImg();
+            }
+        }
+    });
+    $( "#dist_rotate" ).val( $( "#slider_dist_rotate" ).slider( "value" ) );
+
     //steps:
     $( "#slider_steps" ).slider({
         range: "min", min: 2, max: 20, value: 10,
@@ -93,14 +107,14 @@ $(function() {
     $( "#steps" ).val( $( "#slider_steps" ).slider( "value" ) );
 });
 function updateImg() {
-    document.getElementById("step_img").src = "step.php?template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&layer=yes";
+    document.getElementById("step_img").src = "step.php?template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&dist_rotate=" + dist_rotate + "&layer=yes";
 }
 function resultLoaded() {
     document.getElementById("result_img").src = resultImg.src;
     document.getElementById("result_div").className = "result";
 }
 function updateResult() {
-    resultImg.src = "step.php?step=" + steps + "&template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate;
+    resultImg.src = "step.php?step=" + steps + "&template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&dist_rotate=" + dist_rotate;
     document.getElementById("result_img").src = "loader.gif"
     document.getElementById("result_div").className = "loader";
 }
@@ -141,6 +155,10 @@ function updateResult() {
             <td class="value"><input type="text" id="distribution" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
             <td><div id="slider_distribution"></div></td>
         </tr><tr>
+            <td class="label"><label for="dist_rotate">Dist. rot:</label></td>
+            <td class="value"><input type="text" id="dist_rotate" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
+            <td><div id="slider_dist_rotate"></div></td>
+        </tr><tr>
             <td class="label"><label for="rotate">Rotate:</label></td>
             <td class="value"><input type="text" id="rotate" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
             <td><div id="slider_rotate"></div></td>
@@ -155,7 +173,7 @@ function updateResult() {
     </td></tr>
     <!-- render -->
     <tr>
-    <td><div class="board" style="background: #aab; height: 140px;"><b>render</b><table class="sliders">
+    <td><div class="board" style="background: #aab; height: 80px;"><b>render</b><table class="sliders">
         <tr>
             <td class="label"><label for="steps">Steps:</label></td>
             <td class="value"><input type="text" id="steps" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
