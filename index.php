@@ -18,8 +18,9 @@
 <script>
 var template = 0;
 var template_size = 40;
+var distance = 140;
 var distribution = 0;
-var rotate = 0;
+var rotate = 45;
 var dist_rotate = 0;
 var steps = 10;
 
@@ -67,9 +68,22 @@ $(function() {
     });
     $( "#distribution" ).val( $( "#slider_distribution" ).slider( "value" ) );
 
+    //distance:
+    $( "#slider_distance" ).slider({
+        range: "min", min: 50, max: 200, value: 140, step: 5,
+        slide: function( event, ui ) {
+            $( "#distance" ).val( ui.value );
+            if ( ui.value != distance ) {
+                distance = ui.value;
+                updateImg();
+            }
+        }
+    });
+    $( "#distance" ).val( $( "#slider_distance" ).slider( "value" ) );
+
     //rotate:
     $( "#slider_rotate" ).slider({
-        range: "min", min: -90, max: 90, value: 0, step: 5,
+        range: "min", min: -90, max: 90, value: 0, step: 3,
         slide: function( event, ui ) {
             $( "#rotate" ).val( ui.value );
             if ( ui.value != rotate ) {
@@ -82,7 +96,7 @@ $(function() {
 
     //dist rotate:
     $( "#slider_dist_rotate" ).slider({
-        range: "min", min: -90, max: 90, value: 0, step: 5,
+        range: "min", min: -90, max: 90, value: 45, step: 3,
         slide: function( event, ui ) {
             $( "#dist_rotate" ).val( ui.value );
             if ( ui.value != dist_rotate ) {
@@ -107,14 +121,26 @@ $(function() {
     $( "#steps" ).val( $( "#slider_steps" ).slider( "value" ) );
 });
 function updateImg() {
-    document.getElementById("step_img").src = "step.php?template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&dist_rotate=" + dist_rotate + "&layer=yes";
+    document.getElementById("step_img").src = "step.php?template=" + template + 
+            "&template_size=" + template_size + 
+            "&distribution=" + distribution + 
+            "&distance=" + distance + 
+            "&rotate=" + rotate + 
+            "&dist_rotate=" + dist_rotate + 
+            "&layer=yes";
 }
 function resultLoaded() {
     document.getElementById("result_img").src = resultImg.src;
     document.getElementById("result_div").className = "result";
 }
 function updateResult() {
-    resultImg.src = "step.php?step=" + steps + "&template=" + template + "&template_size=" + template_size + "&distribution=" + distribution + "&rotate=" + rotate + "&dist_rotate=" + dist_rotate;
+    resultImg.src = "step.php?step=" + steps + 
+            "&template=" + template + 
+            "&template_size=" + template_size + 
+            "&distribution=" + distribution + 
+            "&distance=" + distance + 
+            "&rotate=" + rotate + 
+            "&dist_rotate=" + dist_rotate;
     document.getElementById("result_img").src = "loader.gif"
     document.getElementById("result_div").className = "loader";
 }
@@ -151,15 +177,19 @@ function updateResult() {
     <tr>
     <td><div class="board" style="background: #aba;"><b>scaling</b><table class="sliders">
         <tr>
-            <td class="label"><label for="distribution">Dist.:</label></td>
+            <td class="label"><label for="distribution">Distribution:</label></td>
             <td class="value"><input type="text" id="distribution" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
             <td><div id="slider_distribution"></div></td>
         </tr><tr>
-            <td class="label"><label for="dist_rotate">Dist. rot:</label></td>
+            <td class="label"><label for="distance">Distance:</label></td>
+            <td class="value"><input type="text" id="distance" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
+            <td><div id="slider_distance"></div></td>
+        </tr><tr>
+            <td class="label"><label for="dist_rotate">Rotate 1:</label></td>
             <td class="value"><input type="text" id="dist_rotate" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
             <td><div id="slider_dist_rotate"></div></td>
         </tr><tr>
-            <td class="label"><label for="rotate">Rotate:</label></td>
+            <td class="label"><label for="rotate">Rotate 2:</label></td>
             <td class="value"><input type="text" id="rotate" style="border: 0; color: #931ff6; font-weight: bold;" size="4" /></td>
             <td><div id="slider_rotate"></div></td>
         </tr>
