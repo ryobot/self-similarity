@@ -24,6 +24,10 @@ $template_size = "40";
 if ( isset($_GET['template_size'] ) ) {
   $template_size = $_GET["template_size"];
 }
+$scaling_str = "0.5";
+if ( isset($_GET['scaling'] ) ) {
+  $scaling_str = $_GET["scaling"];
+}
 $distribution_str = "0";
 if ( isset($_GET['distribution'] ) ) {
   $distribution_str = $_GET["distribution"];
@@ -39,6 +43,14 @@ if ( isset($_GET['rotate'] ) ) {
 $dist_rotate_str = "0";
 if ( isset($_GET['dist_rotate'] ) ) {
   $dist_rotate_str = $_GET["dist_rotate"];
+}
+$pos_x_str = "0";
+if ( isset($_GET['pos_x'] ) ) {
+  $pos_x_str = $_GET["pos_x"];
+}
+$pos_y_str = "0";
+if ( isset($_GET['pos_y'] ) ) {
+  $pos_y_str = $_GET["pos_y"];
 }
 $step = 0;
 if ( isset($_GET['step'] ) ) {
@@ -58,10 +70,13 @@ if ( $step == 0 ) {
 } else {
     $copy_url = "http://localhost/ss/step.php?step=".strval($step)."&template=".$template;
     $copy_url .= "&template_size=".$template_size;
+    $copy_url .= "&scaling=".$scaling_str;
     $copy_url .= "&distribution=".$distribution_str;
     $copy_url .= "&distance=".$distance_str;
     $copy_url .= "&rotate=".$rotate_str;
     $copy_url .= "&dist_rotate=".$dist_rotate_str;
+    $copy_url .= "&pos_x=".$pos_x_str;
+    $copy_url .= "&pos_y=".$pos_y_str;
 }
 $copy_img = imagecreatefrompng($copy_url);
 
@@ -69,6 +84,8 @@ $distribution = intval($distribution_str);
 $distance = intval($distance_str);
 $rotate = -intval($rotate_str);
 $dist_rotate = intval($dist_rotate_str);
+$pos_x = intval($pos_x_str);
+$pos_y = intval($pos_y_str);
 
 $base_url = "http://localhost/ss/template.php?template=".$template."&template_size=".$template_size."&layer=".$layer;
 $img = imagecreatefrompng($base_url);
@@ -77,17 +94,20 @@ $height = imagesy($img);
 
 imagealphablending($img, true);
 
-$scale = 0.5;
+//$scale = 0.5;
+$scale = floatval($scaling_str);
 $dist = $distance;
 if ($mini) {
     $dist = 0.5*$distance;
+    $pos_x = 0.5*$pos_x;
+    $pos_y = 0.5*$pos_y;
 }
 
 $dx = $scale*$width;
 $dy = $scale*$height;
 
-$x0 = $width / 2;
-$y0 = $height / 2;
+$x0 = $width / 2 + $pos_x;
+$y0 = $height / 2 - $pos_y;
 
 switch($distribution) {
     case 1: // 3/4
@@ -182,7 +202,7 @@ imagealphablending($img, false);
 imagesavealpha($img, true);
 header('Content-type: image/png');
 if ($mini) {
-    $frame = 30;
+    $frame = 20;
     imagepng(cropImg($img, $frame, $frame, $width - 2*$frame, $height - 2*$frame));
 } else {
     imagepng($img);

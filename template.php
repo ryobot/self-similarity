@@ -37,6 +37,15 @@ imagesavealpha($img, true);
 imagefill($img,100,100,$trans);
 
 switch ($template) {
+    case 4: //stick:
+        $poly = array (
+            $x_zero - 5*$scale, $y_zero - 150*$scale,
+            $x_zero + 5*$scale, $y_zero - 150*$scale,
+            $x_zero + 5*$scale, $y_zero + 150*$scale,
+            $x_zero - 5*$scale, $y_zero + 150*$scale,
+        );
+        imagefilledpolygon($img, $poly, 4, $blu);
+        break;
     case 3: //allow:
         $poly = array (
             $x_zero - 75*$scale, $y_zero - 75*$scale,

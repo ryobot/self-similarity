@@ -19,7 +19,7 @@ div.contents {
     border: 1px solid #778;
 }
 table.sliders td {
-    padding: 5px;
+    padding: 6px;
 }
 div.board {
     border-radius: 10px;
@@ -37,21 +37,21 @@ div.loader {
 div.result {
     border-radius: 10px;
     background: #fff;
-    //width: 615px;
-    width: 100%;
+    width: 615px;
+    //width: 100%;
     height: 615px;
     padding-left: 15px;
     padding-top: 15px;
 }
 
 .ui-slider .ui-slider-handle { 
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
 }
 
 .ui-slider {
     width: 150px;
-    height: 5px;
+    height: 4px;
     margin: 0px 0px;
     padding: 0px;
 }
